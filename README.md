@@ -1,29 +1,34 @@
-# Welcome to your Lovable project
+# JSS Academy of Technical Education, Noida — Companies Research & Placement Analytics Portal
 
-This project was built with [Lovable](https://lovable.dev).
+a.k.a. **JSS Academy of Technical Education, Noida Placement Intelligence Hub**
 
-## Build with Lovable
+## Phase 1 — UI only
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+- **College used:** `COLLEGE_NAME = "JSS Academy of Technical Education, Noida"`, `COLLEGE_SHORT = "JSS"` (see `src/lib/college.ts`).
+- **Hardcoded seed data.** Every page renders from `src/data/seedCompanies.ts` (Accenture) and `src/data/skillTopics.ts` (10-level ladders for 12 skills). There is no database, no backend, no Supabase client.
+- **Fully public.** There is no login, no auth context and no protected routes. Every page is reachable directly.
+- **No college logo.** The hero is text only. Recruiting-company logos come from Logo.dev when `VITE_LOGO_DEV_PUBLISHABLE_KEY` is set, otherwise the seed `logo_url`, otherwise an initial letter.
+- CTC, stipend and selection ratio are never displayed (normalizers strip them).
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+## Pages
 
-## Development
+| URL | Page |
+| --- | --- |
+| `/` | Company grid with search and category filters |
+| `/company` | Redirects to `/company/intelligence` |
+| `/company/intelligence` | 22-section company intelligence |
+| `/company/skills` | Skill intelligence with Bloom levels and roadmaps |
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+The selected company is stored in localStorage under `selected-company`, so both company pages survive a refresh. Without a selection they send you back to `/`.
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+## Phase 2 — Supabase
 
-## Built with
+`src/lib/companyData.ts` normalizers take the raw `short_json`, `full_json` and `skill_levels` shapes. Phase 2 only swaps the `queryFn`s in `src/lib/companyQueries.ts` to read those JSONB columns from Supabase and pass them through the same normalizers.
 
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+## Stack note
+
+The brief named React Router 6 + Tailwind v3. This project runs on TanStack Start (TanStack Router file routes) and Tailwind v4, which is what Lovable supports; the routes, redirect, layout `<Outlet />` and behaviour match the brief exactly.
+
+## Tests
+
+`bun run test` — routing checks plus skill/category/data rules.
