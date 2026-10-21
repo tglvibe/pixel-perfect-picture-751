@@ -31,8 +31,8 @@ export function readStoredCompany(): SelectedCompany | null {
     if (!seed) return null;
     return {
       companyId: seed.company_id,
-      companyName: asString(seed.short_json.short_name) || asString(seed.short_json.name),
-      logoUrl: asString(seed.short_json.logo_url),
+      companyName: asString(seed.short_json["short_name"]) || asString(seed.short_json["name"]),
+      logoUrl: asString(seed.short_json["logo_url"]),
     };
   } catch {
     return null;

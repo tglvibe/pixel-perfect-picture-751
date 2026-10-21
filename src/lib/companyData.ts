@@ -127,7 +127,7 @@ export function splitItems(value: string): string[] {
   return value
     .split(/\r?\n|;|•|·|\u2022|\.(?=\s+[A-Z])/)
     .map((s) => s.replace(/^[\s\-*]+/, "").trim())
-    .filter((s) => s.length > 0 && !isNullish(s));
+    .filter((s) => s["length"] > 0 && !isNullish(s));
 }
 
 export function titleCaseFromCode(code: string): string {
@@ -173,18 +173,18 @@ export function normalizeCompanySummary(shortJson: unknown, companyId = 0): Comp
   const s = asRecord(shortJson);
   return {
     companyId,
-    name: asString(s.name),
-    shortName: asString(s.short_name) || asString(s.name),
-    logoUrl: asString(s.logo_url),
-    category: asString(s.category),
-    companyType: toCompanyType(s.company_type),
-    incorporationYear: asString(s.incorporation_year),
-    employeeSize: asString(s.employee_size),
-    headquarters: asString(s.headquarters_address),
-    operatingCountries: asString(s.operating_countries),
-    officeLocations: asString(s.office_locations),
-    yoyGrowthRate: asString(s.yoy_growth_rate),
-    websiteUrl: asString(s.website_url),
+    name: asString(s["name"]),
+    shortName: asString(s["short_name"]) || asString(s["name"]),
+    logoUrl: asString(s["logo_url"]),
+    category: asString(s["category"]),
+    companyType: toCompanyType(s["company_type"]),
+    incorporationYear: asString(s["incorporation_year"]),
+    employeeSize: asString(s["employee_size"]),
+    headquarters: asString(s["headquarters_address"]),
+    operatingCountries: asString(s["operating_countries"]),
+    officeLocations: asString(s["office_locations"]),
+    yoyGrowthRate: asString(s["yoy_growth_rate"]),
+    websiteUrl: asString(s["website_url"]),
   };
 }
 
@@ -208,17 +208,17 @@ export function normalizeDashboardSkills(skillLevels: unknown): DashboardSkill[]
   return skillLevels
     .map((raw) => {
       const r = asRecord(raw);
-      const score = Math.max(0, Math.min(10, Number(r.required_level) || 0));
+      const score = Math.max(0, Math.min(10, Number(r["required_level"]) || 0));
       return {
-        id: Number(r.skill_set_id) || 0,
-        name: asString(r.skill_set_name),
+        id: Number(r["skill_set_id"]) || 0,
+        name: asString(r["skill_set_name"]),
         score,
-        proficiency: asString(r.required_proficiency),
+        proficiency: asString(r["required_proficiency"]),
         bloom: proficiencyToBloom(score),
         criticality: scoreToCriticality(score),
         difficulty: scoreToDifficulty(score),
       };
     })
-    .filter((s) => s.name && !isForbiddenField(s.name))
+    .filter((s) => s["name"] && !isForbiddenField(s["name"]))
     .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
 }

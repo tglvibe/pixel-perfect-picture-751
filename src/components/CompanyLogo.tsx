@@ -2,7 +2,7 @@ import { memo, useMemo, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
-const LOGO_DEV_KEY = import.meta.env.VITE_LOGO_DEV_PUBLISHABLE_KEY as string | undefined;
+const LOGO_DEV_KEY = import.meta.env["VITE_LOGO_DEV_PUBLISHABLE_KEY"] as string | undefined;
 
 function domainOf(url: string): string | null {
   try {
@@ -14,8 +14,8 @@ function domainOf(url: string): string | null {
 
 interface CompanyLogoProps {
   name: string;
-  logoUrl?: string;
-  websiteUrl?: string;
+  logoUrl?: string | undefined;
+  websiteUrl?: string | undefined;
   size?: "sm" | "md" | "lg";
   className?: string;
 }

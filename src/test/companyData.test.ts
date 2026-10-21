@@ -36,7 +36,7 @@ describe("skill rules", () => {
 });
 
 describe("seed data", () => {
-  const seed = SEED_COMPANIES[0];
+  const seed = SEED_COMPANIES[0]!;
 
   it("Accenture is a Dream company", () => {
     expect(normalizeCompanySummary(seed.short_json, seed.company_id).companyType).toBe("Dream");
@@ -45,7 +45,7 @@ describe("seed data", () => {
   it("has 12 skills sorted by score, each with a 10-level roadmap", () => {
     const skills = normalizeDashboardSkills(seed.skill_levels);
     expect(skills).toHaveLength(12);
-    expect(skills[0].name).toBe("Data Structures & Algorithms");
+    expect(skills[0]?.name).toBe("Data Structures & Algorithms");
     for (const s of skills) expect(SKILL_TOPICS[s.id]).toHaveLength(10);
   });
 
@@ -53,8 +53,8 @@ describe("seed data", () => {
     const profile = normalizeCompanyProfile(seed.full_json, seed.short_json, seed.company_id);
     const sections = buildIntelligenceSections(profile);
     expect(sections).toHaveLength(22);
-    expect(sections[0].title).toBe("Company Identity");
-    expect(sections[21].title).toBe("Contact Information");
+    expect(sections[0]?.title).toBe("Company Identity");
+    expect(sections[21]?.title).toBe("Contact Information");
   });
 
   it("never exposes CTC, stipend or selection ratio", () => {
