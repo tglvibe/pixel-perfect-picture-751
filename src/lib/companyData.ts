@@ -127,7 +127,7 @@ export function splitItems(value: string): string[] {
   return value
     .split(/\r?\n|;|•|·|\u2022|\.(?=\s+[A-Z])/)
     .map((s) => s.replace(/^[\s\-*]+/, "").trim())
-    .filter((s) => s["length"] > 0 && !isNullish(s));
+    .filter((s) => s.length > 0 && !isNullish(s));
 }
 
 export function titleCaseFromCode(code: string): string {
@@ -219,6 +219,6 @@ export function normalizeDashboardSkills(skillLevels: unknown): DashboardSkill[]
         difficulty: scoreToDifficulty(score),
       };
     })
-    .filter((s) => s["name"] && !isForbiddenField(s["name"]))
+    .filter((s) => s.name && !isForbiddenField(s.name))
     .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
 }
